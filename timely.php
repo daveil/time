@@ -1,6 +1,8 @@
 <?php
 require 'constants.php';
 header('Content-Type: application/json');
+if(isset($_GET['TIME_TOKEN']))
+	$_POST['TIME_TOKEN'] = $_GET['TIME_TOKEN'];
 if(isset($_POST)){
 	if(!isset($_POST['TIME_TOKEN'])){
 		echo 'TIME_TOKEN required'; exit;
