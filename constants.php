@@ -5,11 +5,12 @@ class TimeAPI{
 	public function __construct(){
 		if(!isset($_ENV['TMLY_APP_ID']) && !isset($_ENV['TMLY_SECRET']))
 			$_ENV = json_decode(file_get_contents('env.json'),true);
-		if(!defined('BASE_URL'))   define('BASE_URL',$_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].($_SERVER['HTTP_HOST']=='localhost'?'/time/':'/'));
+		if(!defined('IS_LOCAL'))   define('IS_LOCAL',$_SERVER['HTTP_HOST']=='localhost');
+		if(!defined('BASE_URL'))   define('BASE_URL',$_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].(IS_LOCAL?'/time/':'/'));
 		if(!defined('CACERT_PEM')) define('CACERT_PEM',dirname(__FILE__).'\cacert.pem');
 		if(!defined('TIME_TOKEN')) define('TIME_TOKEN', $_ENV['TIME_TOKEN']);
 		$this->curl = new Curl\Curl();
-		$this->curl->setOpt(CURLOPT_CAINFO,CACERT_PEM);
+		if(IS_LOCAL) $this->curl->setOpt(CURLOPT_CAINFO,CACERT_PEM);
 	}
 	public function get($endpoint,$params=array()){
 		$params['TIME_TOKEN'] = TIME_TOKEN;
