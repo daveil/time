@@ -36,6 +36,9 @@ class TimelyAPI extends TimeAPI{
 	public function get($endpoint,$params=array()){
 		$params['access_token'] = TMLY_ACCESS_TOKEN;
 		$this->curl->get(TIMELY_API.$endpoint,$params);
+		echo $this->curl->error_code;
+		echo TIMELY_API.$endpoint;
+		print_r($params);
 		echo $this->curl->response;
 		return  json_decode($this->curl->response,true);
 	}
