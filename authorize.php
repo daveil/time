@@ -11,5 +11,5 @@ foreach($params as $k=>$v){
 	array_push($p,$k.'='.$v);
 }
 $url .='?'.implode('&',$p);
-header("Location: $url");
+echo $url;
 ?>

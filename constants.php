@@ -6,5 +6,5 @@ define('TIMELY_API','https://api.timelyapp.com/1.0');
 define('TMLY_APP_ID', $_ENV['TMLY_APP_ID']);
 define('TMLY_SECRET', $_ENV['TMLY_SECRET']);
 define('TMLY_TOKEN',$_ENV['TMLY_TOKEN']);
-define('BASE_URL',$_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+define('BASE_URL',$_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].($_SERVER['HTTP_HOST']=='localhost'?'/time/':'/'));
 ?>
