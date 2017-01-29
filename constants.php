@@ -1,14 +1,18 @@
 <?php
 require __DIR__ . '/vendor/autoload.php';
+date_default_timezone_set('Asia/Manila');
 class TimeAPI{
 	protected $curl;
 	public function __construct(){
-		if(!isset($_ENV['TMLY_APP_ID']) && !isset($_ENV['TMLY_SECRET']))
-			$_ENV = json_decode(file_get_contents('env.json'),true);
 		if(!defined('IS_LOCAL'))   define('IS_LOCAL',$_SERVER['HTTP_HOST']=='localhost');
+		if(IS_LOCAL)
+			$_ENV = json_decode(file_get_contents('env.json'),true);
+		
 		if(!defined('BASE_URL'))   define('BASE_URL',$_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].(IS_LOCAL?'/time/':'/'));
 		if(!defined('CACERT_PEM')) define('CACERT_PEM',dirname(__FILE__).'\cacert.pem');
 		if(!defined('TIME_TOKEN')) define('TIME_TOKEN', $_ENV['TIME_TOKEN']);
+		if(!defined('IFTT_SECRET'))define('IFTT_SECRET', $_ENV['IFTT_SECRET']);
+		if(!defined('TGGLE_API_TOKEN')) define('TGGLE_API_TOKEN', $_ENV['TGGLE_API_TOKEN']);
 		$this->curl = new Curl\Curl();
 		if(IS_LOCAL) $this->curl->setOpt(CURLOPT_CAINFO,CACERT_PEM);
 	}
