@@ -1,0 +1,11 @@
+{
+    "name": "daveadev/time",
+    "description": "Time is gold therefore time is a commodity",
+    "authors": [
+        {
+            "name": "Dave Arroyo",
+            "email": "hello@daveadev.com"
+        }
+    ],
+    "require": {}
+}
