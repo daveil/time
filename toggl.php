@@ -18,8 +18,8 @@ if($lastTimer){
 	$lastTimer = $toggl->createTimeEntry($newTimer);
 	$lastTime = $lastTimer->start;
 }
-$start = date(DateTime::ATOM,strtotime("-1 hour"));
-$end = date(DateTime::ATOM,strtotime($lastTime." +1 second"));
+$start = date(DateTime::ATOM,strtotime("-61 minutes"));
+$end = date(DateTime::ATOM,strtotime($lastTime." +1 minute"));
 $entries = $toggl->getTimeEntriesInRange($start, $end);
 $project = array();
 //Toggl Projects
