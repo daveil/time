@@ -2,12 +2,21 @@
 require 'constants.php';
 if(!isset($_GET['secret'])) return;
 if($_GET['secret']!=$_ENV['IFTT_SECRET']) return;
-
+//Toggl Projects
+$tggl_prj = array();
+$project = array();
 $toggl = new MorningTrain\TogglApi\TogglApi(TGGLE_API_TOKEN);
 $lastTimer = $toggl->getRunningTimeEntry();
-$toggl->stopTimeEntry($lastTimer->id);
 $lastTime = "";
+
 if($lastTimer){
+	$toggl->stopTimeEntry($lastTimer->id);
+	$project[$pid] = $toggl->getProject($pid)->name;
+	$name = $project[$pid];
+	$tggl_prj[$name] = array();
+	$timer = array('desc'=>$lastTimer->description,'date'=>$lastTimer->at,'duration'=>$lastTimer->duration);
+	array_push($tggl_prj[$name],$timer);
+	
 	$newTimer =  array(
 					'description'=>$lastTimer->description,
 					'pid'=>$lastTimer->pid,
@@ -18,12 +27,11 @@ if($lastTimer){
 	$lastTimer = $toggl->createTimeEntry($newTimer);
 	$lastTime = $lastTimer->start;
 }
-$start = date(DateTime::ATOM,strtotime("-61 minutes"));
-$end = date(DateTime::ATOM,strtotime($lastTime." +1 minute"));
+$start = date(DateTime::ATOM,strtotime(" -60 minutes"));
+$end = date(DateTime::ATOM,strtotime($lastTime." -10 seconds"));
 $entries = $toggl->getTimeEntriesInRange($start, $end);
-$project = array();
-//Toggl Projects
-$tggl_prj = array();
+
+
 
 foreach($entries as $entry){
 	$pid = $entry->pid;
