@@ -33,7 +33,8 @@ class TimelyAPI extends TimeAPI{
 		define('TMLY_ACCESS_TOKEN',$_ENV['TMLY_ACCESS_TOKEN']);
 		define('TMLY_REFRESH_TOKEN',$_ENV['TMLY_REFRESH_TOKEN']);
 	
-		
+		echo TMLY_ACCESS_TOKEN;
+		echo TMLY_TOKEN;
 	}
 	public function get($endpoint,$params=array()){
 		$params['access_token'] = TMLY_ACCESS_TOKEN;

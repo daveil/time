@@ -1,7 +1,6 @@
 <?php
 require 'constants.php';
 header('Content-Type: application/json');
-
 if(isset($_POST)){
 	if(!isset($_POST['TIME_TOKEN'])){
 		echo 'TIME_TOKEN required'; exit;
