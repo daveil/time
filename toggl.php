@@ -8,7 +8,8 @@ $project = array();
 $toggl = new MorningTrain\TogglApi\TogglApi(TGGLE_API_TOKEN);
 $lastTimer = $toggl->getRunningTimeEntry();
 $lastTime = "";
-
+$lastHour = " -1 hour";
+if(isset($_GET['last'])) $lastHour=' -'.$_GET['last'];
 if($lastTimer){
 	$toggl->stopTimeEntry($lastTimer->id);
 	$project[$pid] = $toggl->getProject($pid)->name;
@@ -27,7 +28,7 @@ if($lastTimer){
 	$lastTimer = $toggl->createTimeEntry($newTimer);
 	$lastTime = $lastTimer->start;
 }
-$start = date(DateTime::ATOM,strtotime(" -60 minutes"));
+$start = date(DateTime::ATOM,strtotime($lastHour));
 $end = date(DateTime::ATOM,strtotime($lastTime." -10 seconds"));
 $entries = $toggl->getTimeEntriesInRange($start, $end);
 
