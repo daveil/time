@@ -10,7 +10,7 @@ $lastTimer = $toggl->getRunningTimeEntry();
 $lastTime = "";
 $lastHour = " -1 hour";
 if(isset($_GET['last'])) $lastHour=' -'.$_GET['last'];
-if($lastTimer){
+if($lastTimer->id){
 	$toggl->stopTimeEntry($lastTimer->id);
 	$project[$pid] = $toggl->getProject($pid)->name;
 	$name = $project[$pid];
@@ -49,6 +49,7 @@ foreach($entries as $entry){
 }
 
 //Timely Projects
+date_default_timezone_set('Asia/Manila');
 $tmly_prj = $TIME_API->post('timely.php?action=get_projects');
 $tmly_events = array();
 foreach($tggl_prj as $prj=>$evts){
@@ -60,7 +61,7 @@ foreach($tggl_prj as $prj=>$evts){
 						'account_id'=>$account_id,
 						'project_id'=>$project_id,
 						'note'=>$evt['desc'],
-						'date'=>$evt['date'],
+						'date'=>date(DateTime::ATOM,strtotime($evt['date'])),
 						'duration'=>$evt['duration']
 					);
 		array_push($tmly_events,$TIME_API->post('timely.php?action=add_event',$params));
